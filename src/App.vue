@@ -10,26 +10,28 @@ const wheelState = ref({
 })
 
 // 轉動秒數直接在程式內設定
-const spinDuration = 3 // 單位: 秒
+const spinDuration = 1.5 // 單位: 秒
 
 function spinWheel() {
   if (wheelState.value.spinning) return
   wheelState.value.spinning = true
 
-  // 隨機圈數(3~8圈)
-  const rounds = Math.floor(Math.random() * 6) + 3 // 3~8圈
-  const end = Math.random() < 0.5 ? 0 : 180 // 0度(Do)或180度(Don't)
-  const target = rounds * 360 + end
+  // 隨機角度 (3~5圈, 即 1080~1800度)
+  const minAngle = 3 * 360 // 1080
+  const maxAngle = 5 * 360 // 1800
+  const randomAngle = Math.floor(Math.random() * (maxAngle - minAngle + 1)) + minAngle
+  const target = wheelState.value.rotation + randomAngle
 
-  // 慢啟動慢停止的 transition
-  wheelState.value.transition = `transform ${spinDuration}s cubic-bezier(.3,1.5,.7,1)`
+  // 更快停止的 cubic-bezier
+  wheelState.value.transition = `transform ${spinDuration}s cubic-bezier(.33,1,.95,1)`
   wheelState.value.rotation = target
 
   setTimeout(() => {
     // 停止時 transition 設為 none，rotation 設為最終角度
     wheelState.value.transition = 'none'
     wheelState.value.spinning = false
-    // wheelState.value.rotation = end
+    // 將 rotation 設為 randomAngle % 360，讓下次從這個角度開始
+    wheelState.value.rotation = target % 360
   }, spinDuration * 1000)
 }
 </script>
