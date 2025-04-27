@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 
+const wheelSize = 500 // px，調整這個數值即可改變 wheel 長寬
+
 const wheelState = ref({
   spinning: false,
   rotation: 0,
@@ -34,8 +36,12 @@ function spinWheel() {
 
 <template>
   <div class="container">
-    <div class="wheel-container">
-      <div class="wheel"
+    <div
+      class="wheel-container"
+      :style="`--wheel-size: ${wheelSize}px;`"
+    >
+      <div
+        class="wheel"
         :style="`transform: rotate(${wheelState.rotation}deg); transition: ${wheelState.transition};`"
       >
         <div class="half do">Do</div>
@@ -60,15 +66,15 @@ function spinWheel() {
 }
 .wheel-container {
   position: relative;
-  width: 320px;
-  height: 320px;
+  width: var(--wheel-size, 300px);
+  height: var(--wheel-size, 300px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .wheel {
-  width: 300px;
-  height: 300px;
+  width: var(--wheel-size, 300px);
+  height: var(--wheel-size, 300px);
   border-radius: 50%;
   position: relative;
   box-shadow: 0 4px 24px #0002;
@@ -91,8 +97,6 @@ function spinWheel() {
 .do {
   background: #2ecc40;
   top: 0;
-  /* border-top-left-radius: 150px; */
-  /* border-top-right-radius: 150px; */
 }
 .dont {
   background: #ff4136;
@@ -140,14 +144,14 @@ function spinWheel() {
   .wheel-container {
     width: 90vw;
     height: 90vw;
-    max-width: 320px;
-    max-height: 320px;
+    max-width: var(--wheel-size, 300px);
+    max-height: var(--wheel-size, 300px);
   }
   .wheel {
     width: 90vw;
     height: 90vw;
-    max-width: 300px;
-    max-height: 300px;
+    max-width: var(--wheel-size, 300px);
+    max-height: var(--wheel-size, 300px);
   }
 }
 </style>
