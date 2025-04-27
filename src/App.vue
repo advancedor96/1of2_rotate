@@ -68,15 +68,15 @@ function spinWheel() {
 }
 .wheel-container {
   position: relative;
-  width: var(--wheel-size, 300px);
-  height: var(--wheel-size, 300px);
+  width: min(90vw, 500px);
+  height: min(90vw, 500px);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .wheel {
-  width: var(--wheel-size, 300px);
-  height: var(--wheel-size, 300px);
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   position: relative;
   box-shadow: 0 4px 24px #0002;
@@ -112,7 +112,6 @@ function spinWheel() {
   transform: translate(-50%, -70%);
   z-index: 3; /* 比 button 低 */
   pointer-events: none;
-  /* 讓 svg 指針往上超出圓形更多 */
   width: 48px;
   height: 110px;
 }
@@ -142,18 +141,6 @@ function spinWheel() {
 .pointer:disabled {
   cursor: not-allowed;
 }
-@media (max-width: 400px) {
-  .wheel-container {
-    width: 90vw;
-    height: 90vw;
-    max-width: var(--wheel-size, 300px);
-    max-height: var(--wheel-size, 300px);
-  }
-  .wheel {
-    width: 90vw;
-    height: 90vw;
-    max-width: var(--wheel-size, 300px);
-    max-height: var(--wheel-size, 300px);
-  }
-}
+
+/* 移除原本的 max-width/max-height RWD，統一用 min() 控制 */
 </style>
