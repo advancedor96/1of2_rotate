@@ -41,11 +41,11 @@ function spinWheel() {
         <div class="half do">Do</div>
         <div class="half dont">Don't</div>
       </div>
-      <button class="pointer" @click="spinWheel" :disabled="wheelState.spinning">
-        <svg width="48" height="110" viewBox="0 0 48 110">
-          <polygon points="24,2 46,90 2,90" fill="#222"/>
-        </svg>
-      </button>
+      <!-- svg 指針移到 button 外面，並絕對定位 -->
+      <svg class="pointer-svg" width="48" height="110" viewBox="0 0 48 110">
+        <polygon points="24,2 46,90 2,90" fill="#222"/>
+      </svg>
+      <button class="pointer" @click="spinWheel" :disabled="wheelState.spinning"></button>
     </div>
   </div>
 </template>
@@ -99,6 +99,17 @@ function spinWheel() {
   bottom: 0;
   transform: rotate(180deg);
 }
+.pointer-svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -70%);
+  z-index: 3; /* 比 button 低 */
+  pointer-events: none;
+  /* 讓 svg 指針往上超出圓形更多 */
+  width: 48px;
+  height: 110px;
+}
 .pointer {
   position: absolute;
   left: 50%;
@@ -113,20 +124,11 @@ function spinWheel() {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 4;
+  z-index: 4; /* 比 svg 高 */
   box-shadow: 0 2px 8px #0002;
   transition: background 0.2s;
-  overflow: visible; /* 讓svg超出按鈕 */
+  overflow: visible;
   padding: 0;
-}
-.pointer svg {
-  position: absolute;
-  top: -22px; /* 指針往上超出圓形更多 */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 48px;
-  height: 64px;
-  pointer-events: none;
 }
 .pointer:active {
   background: #eee;
