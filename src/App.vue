@@ -79,9 +79,11 @@ function spinWheel() {
   height: 100%;
   border-radius: 50%;
   position: relative;
-  box-shadow: 0 4px 24px #0002;
   background: transparent;
   overflow: hidden;
+  border: 3px solid #222; /* 新增黑邊 */
+  /* 新增浮起來的陰影 */
+  box-shadow: 0 16px 48px 0 #0003, 0 2px 8px #0002;
 }
 .half {
   position: absolute;
@@ -97,11 +99,11 @@ function spinWheel() {
   letter-spacing: 2px;
 }
 .do {
-  background: #2ecc40;
+  background: #43a047;
   top: 0;
 }
 .dont {
-  background: #ff4136;
+  background: #e53935;
   bottom: 0;
   transform: rotate(180deg);
 }
