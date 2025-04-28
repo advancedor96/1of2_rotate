@@ -51,7 +51,7 @@ function spinWheel() {
       </div>
       <!-- svg 指針移到 button 外面，並絕對定位 -->
       <svg class="pointer-svg" width="48" height="110" viewBox="0 0 48 110">
-        <polygon points="24,2 46,90 2,90" fill="#222"/>
+        <polygon points="24,0 56,90 -8,90" fill="#222"/>
       </svg>
       <button class="pointer" @click="spinWheel" :disabled="wheelState.spinning"></button>
     </div>
@@ -125,8 +125,8 @@ function spinWheel() {
   background: #fff;
   border: 4px solid #222;
   border-radius: 50%;
-  width: 64px;
-  height: 64px;
+  width: 84px;
+  height: 84px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,6 +136,7 @@ function spinWheel() {
   transition: background 0.2s;
   overflow: visible;
   padding: 0;
+  user-select: none;
 }
 .pointer:active {
   background: #eee;
