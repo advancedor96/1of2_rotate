@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { Analytics } from '@vercel/analytics/vue';
 
 const wheelSize = 500 // px，調整這個數值即可改變 wheel 長寬
 
@@ -45,6 +46,7 @@ function spinWheel() {
 </script>
 
 <template>
+    <Analytics />
   <div class="container">
     <div
       class="wheel-container"
