@@ -5,12 +5,12 @@ const wheelSize = 500 // px，調整這個數值即可改變 wheel 長寬
 
 const wheelState = ref({
   spinning: false,
-  rotation: 0,
+  rotation: 90,
   transition: 'none'
 })
 
 // 轉動秒數直接在程式內設定
-const spinDuration = 1.5 // 單位: 秒
+const spinDuration = 1 // 單位: 秒
 
 function spinWheel() {
   if (wheelState.value.spinning) return
@@ -19,8 +19,16 @@ function spinWheel() {
   // 隨機角度 (3~5圈, 即 1080~1800度)
   const minAngle = 3 * 360 // 1080
   const maxAngle = 5 * 360 // 1800
-  const randomAngle = Math.floor(Math.random() * (maxAngle - minAngle + 1)) + minAngle
-  const target = wheelState.value.rotation + randomAngle
+  let randomAngle = Math.floor(Math.random() * (maxAngle - minAngle + 1)) + minAngle
+
+  let target = wheelState.value.rotation + randomAngle
+  if(target%180  === 90) {
+    // 讓轉動的時候不會剛好停在中間 
+    target += Math.random() < 0.5 ? 10 : -10
+  }
+  
+  
+
 
   // 更快停止的 cubic-bezier
   wheelState.value.transition = `transform ${spinDuration}s cubic-bezier(.33,1,.95,1)`
