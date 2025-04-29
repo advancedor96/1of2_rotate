@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { Analytics } from '@vercel/analytics/vue';
 
 const wheelSize = 500 // px，調整這個數值即可改變 wheel 長寬
@@ -9,13 +9,25 @@ const wheelState = ref({
   rotation: 90,
   transition: 'none'
 })
-
+const counter = ref(0)
+const formattedCounter = computed(() => counter.value.toLocaleString())
 // 轉動秒數直接在程式內設定
 const spinDuration = 1 // 單位: 秒
+onMounted(()=>{
+  // 讀取 localStorage 的 clickCount
+  const clickCount = localStorage.getItem('clickCount')
+  if (clickCount) {
+    counter.value = parseInt(clickCount)
+  } else {
+    counter.value = 0
+  }
+})
 
 function spinWheel() {
-  if (wheelState.value.spinning) return
-  wheelState.value.spinning = true
+  counter.value++
+  localStorage.setItem('clickCount', counter.value)
+
+
 
   // 隨機角度 (3~5圈, 即 1080~1800度)
   const minAngle = 3 * 360 // 1080
@@ -43,11 +55,13 @@ function spinWheel() {
     wheelState.value.rotation = target % 360
   }, spinDuration * 1000)
 }
+
 </script>
 
 <template>
-    <Analytics />
+  <Analytics />
   <div class="container">
+    <div class="counter">click: {{formattedCounter}}</div>
     <div
       class="wheel-container"
       :style="`--wheel-size: ${wheelSize}px;`"
@@ -63,18 +77,28 @@ function spinWheel() {
       <svg class="pointer-svg" width="48" height="110" viewBox="0 0 48 110">
         <polygon points="24,0 56,90 -8,90" fill="#222"/>
       </svg>
-      <button class="pointer" @click="spinWheel" :disabled="wheelState.spinning"></button>
+      <button class="pointer" @click="spinWheel" ></button>
     </div>
   </div>
 </template>
 
 <style scoped>
 .container {
+  position:relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f6f6f6;
+
+}
+.counter {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-weight: bold;
+  color: #222;
+  user-select: none;
 }
 .wheel-container {
   position: relative;
